@@ -30,3 +30,9 @@ YOUR SECTIONS
 MEDIA QUERIES
 -------------------------------------------------------------------
 */
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--main-bg-color: #111;
+	}
+}
