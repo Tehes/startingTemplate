@@ -1,6 +1,7 @@
 :root {
-  --main-bg-color: #FFF;
-  --main-font-color: #333;
+  --achromatic: 0, 0%; /* neutral color */
+  --bg-color: hsl(var(--achromatic), 100%); /* #fff */
+  --font-color: hsl(var(--achromatic), 20%); /* #333 */
 }
 
 * {
@@ -16,14 +17,14 @@ html {
 }
 
 body {
-    background-color: var(--main-bg-color);
+    background-color: var(--bg-color);
     user-select: none;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
     margin:0;
 	padding:0;
-	color: var(--main-font-color);
-
+	color: var(--font-color);
+	font-size: 100%;
 }
 
 /*
@@ -40,7 +41,8 @@ MEDIA QUERIES
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--main-bg-color: #111;
-		--main-font-color: #CCC;
+		--font-color: #CCC;
+		--bg-color: hsl(var(--achromatic), 10%);
+		--font-color: hsl(var(--achromatic), 80%);
 	}
 }
