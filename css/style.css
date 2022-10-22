@@ -26,6 +26,9 @@ body {
 	padding:0;
 	color: var(--font-color);
 	font-size: 100%;
+    min-height: 100vh;
+    /* mobile viewport bug fix */
+    min-height: -webkit-fill-available;
 }
 
 /*
