@@ -1,7 +1,6 @@
 :root {
-  --achromatic: 0, 0%; /* neutral color */
-  --bg-color: hsl(var(--achromatic), 100%);
-  --font-color: hsl(var(--achromatic), 20%);
+  --bg-color: hsl(0, 0%, 100%);
+  --font-color: hsl(0, 0%, 20%);
 }
 
 * {
@@ -43,7 +42,7 @@ MEDIA QUERIES
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--bg-color: hsl(var(--achromatic), 10%);
-		--font-color: hsl(var(--achromatic), 80%);
+		--bg-color: hsl(0, 0%, 20%);
+		--font-color: hsl(0, 0%, 90%);
 	}
 }
