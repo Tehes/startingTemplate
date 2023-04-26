@@ -1,12 +1,13 @@
 :root {
-  --bg-color: hsl(0, 0%, 100%);
+  --bg-color: hsl(0, 0%, 95%);
   --font-color: hsl(0, 0%, 20%);
 }
 
 * {
     box-sizing: border-box;
-    touch-action: manipulation;
-    /* disable double tap to zoom */
+    /* disable double tap to zoom. only use in mobile-pwa */
+    /* touch-action: manipulation; */
+    
 }
 
 html {
@@ -29,6 +30,7 @@ body {
     min-height: 100vh;
     /* mobile viewport bug fix */
     min-height: -webkit-fill-available;
+    /* will switch to 100 dvh when browser support grows */
 }
 
 /*
