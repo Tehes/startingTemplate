@@ -1,7 +1,7 @@
 :root {
     /* will switch to oklch soon: */
-   --bg-color: hsl(0, 0%, 95%); /*  oklch(96%, 0%, 90%) */
-  --font-color: hsl(0, 0%, 20%); /* oklch(32%, 0%, 90%) */
+   --bg-color: hsl(0, 0%, 95%); /*  oklch(96%, 0%, 0) */
+  --font-color: hsl(0, 0%, 20%); /* oklch(32%, 0%, 0) */
 }
 
 * {
@@ -49,7 +49,7 @@ MEDIA QUERIES
 @media (prefers-color-scheme: dark) {
 	:root {
         /* will switch to oklch soon: */
-		--bg-color: hsl(0, 0%, 20%); /* oklch(32%, 0%, 90%) */
-		--font-color: hsl(0, 0%, 90%); /* oklch(92%, 0%, 90%) */
+		--bg-color: hsl(0, 0%, 20%); /* oklch(32%, 0%, 0) */
+		--font-color: hsl(0, 0%, 90%); /* oklch(92%, 0%, 0) */
 	}
 }
