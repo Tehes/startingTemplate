@@ -26,7 +26,7 @@ window.app = {
     init
 };
 
-app.init();
+window.app.init();
 
 /* --------------------------------------------------------------------------------------------------
 Service Worker registration. Only use, when you want a PWA
