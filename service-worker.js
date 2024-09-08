@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dice-roller-cache-v1'; // Clear and specific to the app and version
+const CACHE_NAME = '--your-app-cache-v1'; // Clear and specific to the app and version
 const urlsToCache = [
   '/',              // The home page
   '/css/style.css', // Your CSS file
