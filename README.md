@@ -68,11 +68,16 @@ If you're building a regular website, some features related to PWAs are unnecess
     // document.addEventListener("touchstart", function() {}, false);
     ```
 
-- **CSS (Touch-Action)**: In `style.css`, this entry disables double-tap to zoom on mobile devices, which is primarily useful for PWAs. If your site doesn't require this feature, you can comment out or remove it:
+- **CSS for PWAs**: The following CSS rules are important for PWAs, but may not be necessary for a standard website:
+    - **`user-select: none;`** and **`-webkit-user-select: none;`**: These rules prevent users from selecting text. In standard websites, this might not be necessary, but for PWAs, where interactions like clicking and swiping are important, it can prevent unwanted text selection.
+    - **`-webkit-touch-callout: none;`**: This rule disables the touch-and-hold menu on iOS (e.g., for "Copy" or "Save Image"), which can be useful in PWAs where such actions are not relevant. You can remove or comment it out if not needed for your use case.
 
     ```css
-    /* disable double tap to zoom. only use in mobile-pwa */
-    /* touch-action: manipulation; */
+    body {
+        user-select: none; /* Prevents text selection */
+        -webkit-user-select: none; /* Prevents text selection on older WebKit-based browsers */
+        -webkit-touch-callout: none; /* Disables the long-press menu on iOS */
+    }
     ```
 
 ### 2. As a Progressive Web App (PWA)

@@ -16,27 +16,29 @@
 }
 
 html {
+    /* Removes tap highlight on touch devices */
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     margin: 0;
     padding: 0;
-    /* mobile viewport bug fix */
-    height: -webkit-fill-available;
+    /* No need for this mobile viewport bug fix anymore */
+    /* height: -webkit-fill-available; */
 }
 
 body {
     background-color: var(--bg-color);
-    /* disables selecting text */
+    /* Disables selecting text (useful for PWAs to prevent unwanted text selection during interactions) */
     user-select: none;
     -webkit-user-select: none;
-    /* disables touch and hold callout on iOS */
+    /* Disables touch and hold callout on iOS (prevents the menu that appears on long press, useful for PWAs) */
     -webkit-touch-callout: none;
     margin: 0;
     padding: 0;
     color: var(--font-color);
     font-size: 100%;
+    /* Uses dynamic viewport height for better handling of mobile viewports */
     min-height: 100dvh;
-    /* mobile viewport bug fix. not needed anymore, thanks to dvh */
-    /* min-height: -webkit-fill-available;*/
+    /* Old mobile viewport bug fix - no longer needed */
+    /* min-height: -webkit-fill-available; */
 }
 
 :is(h1, h2, h3, h4, h5, h6) {
