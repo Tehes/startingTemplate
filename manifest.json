@@ -1,6 +1,7 @@
 {
     "short_name": "--yourSiteName--",
     "name": "--yourSiteName--",
+    "description": "--your description--",
     "icons": [
         {
             "src": "icons/180x180.png",
@@ -8,7 +9,8 @@
             "sizes": "180x180"
         }
     ],
-    "start_url": "index.html",
+    "start_url": "/",
+    "scope": "/",
     "background_color": "#eee",
     "display": "standalone",
     "theme_color": "#eee"
