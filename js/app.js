@@ -12,7 +12,11 @@ functions
 ---------------------------------------------------------------------------------------------------*/
 
 function init() {
-    document.addEventListener("touchstart", function() {}, false);
+    // The following touchstart event listener was used as a workaround for older iOS devices
+    // to prevent a 300ms delay in touch interactions. It is likely not necessary anymore
+    // on modern devices and browsers, especially in Progressive Web Apps.
+    // If you experience issues with touch interactions, you can uncomment it again.
+    // document.addEventListener("touchstart", function() {}, false);
 }
 
 /* --------------------------------------------------------------------------------------------------

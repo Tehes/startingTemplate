@@ -22,35 +22,11 @@ This is a versatile starter template designed to help you build either a traditi
 └── .eslintrc.js       # ESLint configuration file
 ```
 
-## Getting Started
+## Installation
 
-### Prerequisites
-- Basic knowledge of HTML, CSS, and JavaScript.
-- A local server to serve the app (necessary for Service Worker functionality in PWA mode). You can use tools like [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) or [http-server](https://www.npmjs.com/package/http-server).
-
-### Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/yourusername/yourrepository.git
-   ```
-
-2. Navigate into the project directory:
-
-   ```bash
-   cd yourrepository
-   ```
-
-3. Serve the project locally:
-
-   If using `http-server`:
-
-   ```bash
-   npx http-server .
-   ```
-
-4. Open the app in your browser at `http://localhost:8080`.
+1. Clone or download the repository using your preferred method (via Git, GitHub CLI, or downloading the ZIP).
+2. Open the project in your preferred text editor.
+3. Serve the project using any local server solution of your choice (e.g., using Live Server from your editor or another tool).
 
 ## Initial Setup
 
@@ -86,10 +62,10 @@ If you're building a regular website, some features related to PWAs are unnecess
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     ```
 
-- **JavaScript Touch Event**: The following line in `app.js` is designed to handle touch events for mobile PWAs. If you're not building a PWA or targeting touch devices, you can remove or comment out this line:
+- **JavaScript Touch Event**: A `touchstart` event listener was previously added to handle touch interactions on older iOS devices. This is likely no longer necessary for modern browsers, especially in Progressive Web Apps. It has been commented out in the code, but you can uncomment it if needed:
 
     ```javascript
-    document.addEventListener("touchstart", function() {}, false);
+    // document.addEventListener("touchstart", function() {}, false);
     ```
 
 - **CSS (Touch-Action)**: In `style.css`, this entry disables double-tap to zoom on mobile devices, which is primarily useful for PWAs. If your site doesn't require this feature, you can comment out or remove it:
