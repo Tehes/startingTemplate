@@ -39,18 +39,10 @@ If you're building a regular website, some features related to PWAs are unnecess
 
 - **Manifest file**: You can remove or ignore `manifest.json` as it's only needed for PWAs.
   
-- **Service Worker**: You don't need a service worker. Make sure the registration code in `app.js` is commented out:
+- **Service Worker**: You don't need a service worker. In `app.js`, set `useServiceWorker` to `false` to ensure that no service worker is registered and that any previously registered service worker is unregistered:
 
     ```javascript
-    // if ('serviceWorker' in navigator) {
-    //     window.addEventListener('load', function() {
-    //         navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-    //             console.log('Service Worker registered with scope:', registration.scope);
-    //         }).catch(function(error) {
-    //             console.log('Service Worker registration failed:', error);
-    //         });
-    //     });
-    // }
+    const useServiceWorker = false;
     ```
 
 - **Meta Tags**: You can remove or ignore the following meta tags in `index.html`:
@@ -60,12 +52,6 @@ If you're building a regular website, some features related to PWAs are unnecess
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="--yourSiteName--">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    ```
-
-- **JavaScript Touch Event**: A `touchstart` event listener was previously added to handle touch interactions on older iOS devices. This is likely no longer necessary for modern browsers, especially in Progressive Web Apps. It has been commented out in the code, but you can uncomment it if needed:
-
-    ```javascript
-    // document.addEventListener("touchstart", function() {}, false);
     ```
 
 - **CSS for PWAs**: The following CSS rules are important for PWAs, but may not be necessary for a standard website:
@@ -110,18 +96,10 @@ If you want to take full advantage of PWA features, follow these steps to ensure
     }
     ```
 
-- **Service Worker**: Enable the service worker in `app.js` by uncommenting the registration code:
+- **Service Worker**: In `app.js`, set `useServiceWorker` to `true` to enable the Service Worker, providing caching and offline support:
 
     ```javascript
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-                console.log('Service Worker registered with scope:', registration.scope);
-            }).catch(function(error) {
-                console.log('Service Worker registration failed:', error);
-            });
-        });
-    }
+    const useServiceWorker = true; // Must be set to true for PWA functionality
     ```
 
 - **Cache Name**: Customize the `CACHE_NAME` in `service-worker.js` to reflect your app's name and version:
@@ -139,17 +117,19 @@ If you want to take full advantage of PWA features, follow these steps to ensure
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     ```
 
-- **JavaScript Touch Event**: Keep the touch event listener in `app.js` to ensure proper touch interactions in mobile PWAs:
-
-    ```javascript
-    document.addEventListener("touchstart", function() {}, false);
-    ```
-
 - **CSS (Touch-Action)**: Keep the following line in your `style.css` to disable double-tap zoom on mobile devices, improving the mobile experience:
 
     ```css
     /* disable double tap to zoom. only use in mobile-pwa */
     touch-action: manipulation;
+    ```
+
+### Optional: `touchstart` Event Listener
+
+- **JavaScript Touch Event**: The `touchstart` event listener was previously used to handle touch interactions on older iOS devices. While it is no longer necessary for most modern devices and browsers, you can leave the code commented out and re-enable it if you experience touch interaction issues:
+
+    ```javascript
+    // document.addEventListener("touchstart", function() {}, false);
     ```
 
 ### Customizing Styles
