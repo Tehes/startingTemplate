@@ -22,11 +22,11 @@ function init() {
 /* --------------------------------------------------------------------------------------------------
 public members, exposed with return statement
 ---------------------------------------------------------------------------------------------------*/
-window.app = {
+app = {
     init
 };
 
-window.app.init();
+app.init();
 
 /* --------------------------------------------------------------------------------------------------
 Service Worker configuration. Toggle 'useServiceWorker' to enable or disable the Service Worker.
