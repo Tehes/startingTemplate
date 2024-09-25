@@ -31,29 +31,34 @@ window.app.init();
 /* --------------------------------------------------------------------------------------------------
 Service Worker configuration. Toggle 'useServiceWorker' to enable or disable the Service Worker.
 ---------------------------------------------------------------------------------------------------*/
-const useServiceWorker = true; // Set to "true" if you want to register the Service Worker, "false" to unregister
+const useServiceWorker = false; // Set to "true" if you want to register the Service Worker, "false" to unregister
 
-const currentPath = window.location.pathname;
+async function registerServiceWorker() {
+    try {
+        const currentPath = window.location.pathname;
+        const registration = await navigator.serviceWorker.register(`${currentPath}service-worker.js`);
+        console.log("Service Worker registered with scope:", registration.scope);
+    } catch (error) {
+        console.log("Service Worker registration failed:", error);
+    }
+}
+
+async function unregisterServiceWorkers() {
+    const registrations = await navigator.serviceWorker.getRegistrations();
+    for (const registration of registrations) {
+        const success = await registration.unregister();
+        if (success) {
+            console.log("Service Worker successfully unregistered.");
+        }
+    }
+}
+
 if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function() {
+    window.addEventListener("load", async () => {
         if (useServiceWorker) {
-            // Register the Service Worker
-            navigator.serviceWorker.register(`${currentPath}service-worker.js`).then(function(registration) {
-                console.log("Service Worker registered with scope:", registration.scope);
-            }).catch(function(error) {
-                console.log("Service Worker registration failed:", error);
-            });
+            await registerServiceWorker();
         } else {
-            // Unregister all Service Workers
-            navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                for (let registration of registrations) {
-                    registration.unregister().then(function(success) {
-                        if (success) {
-                            console.log("Service Worker successfully unregistered.");
-                        }
-                    });
-                }
-            });
+            await unregisterServiceWorkers();
         }
     });
 }
