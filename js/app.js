@@ -34,8 +34,8 @@ const useServiceWorker = false; // Set to "true" if you want to register the Ser
 
 async function registerServiceWorker() {
 	try {
-		const registration = await navigator.serviceWorker.register("/service-worker.js", {
-			scope: "/",
+		const registration = await navigator.serviceWorker.register("./service-worker.js", {
+			scope: "./",
 		});
 		console.log("Service Worker registered with scope:", registration.scope);
 	} catch (error) {
