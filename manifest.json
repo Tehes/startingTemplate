@@ -4,6 +4,11 @@
     "description": "--your description--",
     "icons": [
         {
+            "src": "icons/favicon.svg",
+            "type": "image/svg+xml",
+            "sizes": "any"
+        },
+        {
             "src": "icons/180x180.png",
             "type": "image/png",
             "sizes": "180x180"
