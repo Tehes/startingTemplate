@@ -10,7 +10,11 @@ design, caching for offline support (if used as a PWA), and basic asset manageme
 - **Service Worker** (PWA mode): Cache‑first + Stale‑While‑Revalidate strategy; works offline after
   the first online visit.
 - **PWA Manifest** (PWA mode): A manifest file for adding the app to home screens on mobile devices.
-- **ESLint Configuration**: Preconfigured ESLint for clean JavaScript code.
+- **Deno Lint & Format**: The included `deno.json` sets up `deno lint` (recommended rules) and
+  `deno fmt` (tabs, 4‑space tab width, 100 char max line length, semicolons).
+- **Favicons**: Ready‑to‑use SVG (`favicon.svg`) and PNG (`180x180.png`) favicons are included. All
+  modern browsers already render SVG favicons; Safari follows in autumn 2025 with iOS 26, so a PNG
+  fallback remains essential.
 
 ## Structure
 
@@ -102,6 +106,11 @@ up correctly:
   	"description": "A brief description of My Application.",
   	"icons": [
   		{
+  			"src": "icons/favicon.svg",
+  			"type": "image/svg+xml",
+  			"sizes": "any"
+  		},
+  		{
   			"src": "icons/180x180.png",
   			"type": "image/png",
   			"sizes": "180x180"
@@ -179,14 +188,49 @@ both light and dark modes:
 
 Feel free to modify the styles to match your branding.
 
-### ESLint
+### Favicons
 
-An `.eslintrc.js` file is included to enforce consistent coding practices. You can run ESLint to
-check your JavaScript for issues:
+The template already ships with two optimized favicon formats stored in `icons/`:
 
-```bash
-npx eslint js/app.js
+| File          | Type / Size | Purpose                                                                                      |
+| ------------- | ----------- | -------------------------------------------------------------------------------------------- |
+| `favicon.svg` | SVG, any    | Primary favicon for browsers with SVG support (Chrome, Firefox, Edge, Android Browser, etc.) |
+| `180x180.png` | PNG 180×180 | Fallback for current Safari versions and used as `apple-touch-icon` on iOS                   |
+
+Reference both in `index.html` to ensure maximum compatibility:
+
+```html
+<link rel="shortcut icon" href="icons/favicon.svg" type="image/svg+xml">
+<link rel="shortcut icon" href="icons/favicon.png">
+<link rel="apple-touch-icon" href="icons/180x180.png">
 ```
+
+_Browser support note:_ SVG favicons work in all major browsers today. Safari will add support
+starting with iOS 26/macOS Safari (planned for autumn 2025). Keep the PNG fallback until then.
+
+### Deno.json
+
+A strict `.deno.json` keeps formatting and linting consistent across the codebase:
+
+```jsonc
+{
+	"fmt": {
+		"useTabs": true,
+		"indentWidth": 4,
+		"lineWidth": 100,
+		"singleQuote": false,
+		"semiColons": true
+	},
+	"lint": {
+		"rules": { "tags": ["recommended"] }
+	}
+}
+```
+
+- **Format:** `deno fmt`
+- **Lint:** `deno lint`
+
+Adjust the values to suit your team’s conventions if necessary.
 
 ### Summary
 
