@@ -5,7 +5,7 @@
  * 3. Cleans up old caches on activation.
  */
 
-const CACHE_NAME = "--your-app-cache-v1"; // Name of the dynamic cache
+const CACHE_NAME = `app_name-cache-${new URL(location).searchParams.get("v") || "default"}`; // Name of the dynamic cache
 
 // Install event
 self.addEventListener("install", () => {

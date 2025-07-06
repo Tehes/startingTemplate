@@ -124,19 +124,17 @@ up correctly:
   }
   ```
 
-- **Service Worker**: In `app.js`, set `useServiceWorker` to `true` to enable the Service Worker,
-  providing caching and offline support:
+- **Service Worker**: In `app.js`, set `useServiceWorker` to `true` and define a
+  `serviceWorkerVersion`. The Service Worker will be registered with a versioned URL like
+  `service-worker.js?v=...`, ensuring that updates are always detected by the browser:
 
   ```javascript
-  const useServiceWorker = true; // Must be set to true for PWA functionality
+  const useServiceWorker = true;
+  const serviceWorkerVersion = "2025-07-06-v1";
   ```
 
-- **Cache Name** (optional): Change `CACHE_NAME` only when you intentionally want to invalidate all
-  previous caches on the next deploy:
-
-  ```javascript
-  const CACHE_NAME = "my-app-cache-v1"; // Update with your app's cache name and version
-  ```
+- **Cache Naming**: The Service Worker extracts the `v` parameter from its registration URL and uses
+  it to generate a versioned cache name. You don't need to change `CACHE_NAME` manually.
 
 - **Meta Tags**: Ensure the PWA-specific meta tags are included in your `index.html` for mobile
   compatibility and PWA installation:
