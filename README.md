@@ -206,6 +206,15 @@ Reference both in `index.html` to ensure maximum compatibility:
 _Browser support note:_ SVG favicons work in all major browsers today. Safari will add support
 starting with iOS 26/macOS Safari (planned for autumn 2025). Keep the PNG fallback until then.
 
+### .nojekyll
+
+If you plan to deploy this project on GitHub Pages, the `.nojekyll` file is essential. It prevents
+GitHub Pages from ignoring files and folders that start with an underscore (`_`), and ensures your
+manually configured service worker and custom directory structure are served as-is—without
+interference from GitHub's Jekyll processing pipeline.
+
+You don't need to modify this file—its mere presence is enough.
+
 ### Deno.json
 
 A strict `.deno.json` keeps formatting and linting consistent across the codebase:
