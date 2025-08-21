@@ -24,6 +24,17 @@ DARK MODE
     }
 }
 
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
 /*
 -------------------------------------------------------------------
 RESET
@@ -62,6 +73,7 @@ body {
     margin: 0;
     padding: 0;
     color: var(--font-color);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-size: 100%;
     /* Uses dynamic viewport height for better handling of mobile viewports */
     min-height: inherit;
@@ -69,8 +81,13 @@ body {
 }
 
 @supports not (height: 100dvh) {
-  html { height: -webkit-fill-available; }
-  body { min-height: -webkit-fill-available; }
+    html {
+        height: -webkit-fill-available;
+    }
+
+    body {
+        min-height: -webkit-fill-available;
+    }
 }
 
 :is(h1, h2, h3, h4, h5, h6) {
@@ -91,18 +108,33 @@ input,
 button,
 textarea,
 select {
-  font-family: inherit;
-  font-size: inherit;
+    font-family: inherit;
+    font-size: inherit;
 }
 
-img, video, canvas, audio, iframe {
-  display: block;
-  max-width: 100%;
+img,
+video,
+canvas,
+audio,
+iframe {
+    display: block;
+    max-width: 100%;
 }
 
-img, video { height: auto; } 
+img,
+video {
+    height: auto;
+}
 
-svg { height: auto; max-width: 100%; }
+svg {
+    height: auto;
+    max-width: 100%;
+}
+
+:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
 
 
 /*
