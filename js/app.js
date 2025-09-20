@@ -32,6 +32,11 @@ Service Worker configuration. Toggle 'useServiceWorker' to enable or disable the
 ---------------------------------------------------------------------------------------------------*/
 const useServiceWorker = false; // Set to "true" if you want to register the Service Worker, "false" to unregister
 const serviceWorkerVersion = "2025-09-20-v1"; // Increment this version to force browsers to fetch a new service-worker.js
+// How should updates from the Service Worker be applied?
+//   "auto"   – reload immediately when an updated asset is available (may discard unsaved input)
+//   "confirm"– ask the user before reloading (safe default for interactive pages)
+//   "silent" – do nothing automatically; developer can provide a custom UI
+const swUpdateBehavior = "silent";
 
 async function registerServiceWorker() {
 	try {
@@ -67,8 +72,32 @@ async function unregisterServiceWorkers() {
 	globalThis.location.reload();
 }
 
+function handleServiceWorkerUpdate() {
+	switch (swUpdateBehavior) {
+		case "auto":
+			globalThis.location.reload();
+			break;
+		case "confirm":
+			if (globalThis.confirm("Eine neue Version ist verfügbar. Seite jetzt neu laden?")) {
+				globalThis.location.reload();
+			}
+			break;
+		case "silent":
+		default:
+			console.log(
+				"[SW] Update verfügbar (swUpdateBehavior='silent'); kein automatisches Reload.",
+			);
+	}
+}
+
 if ("serviceWorker" in navigator) {
 	globalThis.addEventListener("DOMContentLoaded", async () => {
+		// React to Service Worker update notifications
+		navigator.serviceWorker.addEventListener("message", (event) => {
+			if (event?.data?.type === "ASSET_UPDATED") {
+				handleServiceWorkerUpdate();
+			}
+		});
 		if (useServiceWorker) {
 			await registerServiceWorker();
 		} else {

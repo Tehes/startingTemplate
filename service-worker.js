@@ -12,6 +12,13 @@ const ALLOWED_ORIGINS = new Set([
 	// Add other allowed origins here (e.g., CDNs, APIs, Google Fonts, etc.)
 ]);
 
+async function notifyClientsAssetUpdated(url) {
+	const clients = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+	for (const client of clients) {
+		client.postMessage({ type: "ASSET_UPDATED", url });
+	}
+}
+
 // Install event
 self.addEventListener("install", () => {
 	self.skipWaiting();
@@ -35,9 +42,12 @@ self.addEventListener("fetch", (event) => {
 				event.waitUntil(
 					fetch(event.request)
 						.then((networkResponse) =>
-							caches.open(CACHE_NAME).then((cache) => {
-								cache.put(event.request, networkResponse.clone());
-							})
+							caches.open(CACHE_NAME).then((cache) =>
+								Promise.all([
+									cache.put(event.request, networkResponse.clone()),
+									notifyClientsAssetUpdated(event.request.url),
+								])
+							)
 						)
 						.catch(() => {}),
 				);
@@ -47,10 +57,12 @@ self.addEventListener("fetch", (event) => {
 			// Not in cache – fetch from network, then cache dynamically
 			return fetch(event.request)
 				.then((networkResponse) =>
-					caches.open(CACHE_NAME).then((cache) => {
-						cache.put(event.request, networkResponse.clone());
-						return networkResponse; // fresh network response
-					})
+					caches.open(CACHE_NAME).then((cache) =>
+						Promise.all([
+							cache.put(event.request, networkResponse.clone()),
+							notifyClientsAssetUpdated(event.request.url),
+						]).then(() => networkResponse)
+					)
 				)
 				.catch(() =>
 					// Offline fallback: attempt cache again (ignore query string);
