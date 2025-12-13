@@ -16,6 +16,15 @@ design, caching for offline support (if used as a PWA), and basic asset manageme
   modern browsers already render SVG favicons; Safari follows in autumn 2025 with iOS 26, so a PNG
   fallback remains essential.
 
+## Optional: Server-side Endpoints via Deno Deploy
+
+This template optionally supports server-side or edge endpoints using **Deno Deploy**.
+
+- Endpoints live in `api/main.js`.
+- All code (frontend + API) resides in the same GitHub Pages repository.
+- Client-side code and Deno-specific code are strictly separated.
+- If you don’t need server-side functionality, you can simply ignore or remove the `api/` folder.
+
 ## Structure
 
 ```bash
@@ -24,10 +33,18 @@ design, caching for offline support (if used as a PWA), and basic asset manageme
 │   └── style.css      # Base styles, responsive design, dark mode support
 ├── js/
 │   └── app.js         # Main JavaScript, includes initialization
+├── api/
+│   └── main.js        # Optional server-side endpoints (Deno Deploy)
+├── data/              # Optional static data (JSON, lookups, seeds)
+├── icons/             # Application icons / favicons
+├── svg/               # UI SVG icons
 ├── manifest.json      # PWA manifest (only for PWA usage)
 ├── service-worker.js  # Service worker (only for PWA usage)
-├── icons/             # Application icons
-└── .eslintrc.js       # ESLint configuration file
+├── deno.json          # Deno linting & formatting config
+├── agents.md          # AI / agent coding guidelines
+├── .nojekyll          # Required for GitHub Pages
+├── README.md
+└── LICENSE.txt
 ```
 
 ## Installation

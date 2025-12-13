@@ -31,7 +31,7 @@ globalThis.app.init();
 Service Worker configuration. Toggle 'useServiceWorker' to enable or disable the Service Worker.
 ---------------------------------------------------------------------------------------------------*/
 const useServiceWorker = false; // set to 'true' to enable the Service Worker
-const serviceWorkerVersion = "2025-11-11-v1"; // update this to force new SW installation
+const serviceWorkerVersion = "2025-12-13-v1"; // update this to force new SW installation
 
 async function registerServiceWorker() {
 	try {
