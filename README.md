@@ -32,7 +32,8 @@ This template optionally supports server-side or edge endpoints using **Deno Dep
 ├── css/
 │   └── style.css      # Base styles, responsive design, dark mode support
 ├── js/
-│   └── app.js         # Main JavaScript, includes initialization
+│   ├── app.js         # Main JavaScript, includes initialization and SW configuration
+│   └── service-worker-registration.js # Browser-side SW registration and cleanup
 ├── api/
 │   └── main.js        # Optional server-side endpoints (Deno Deploy)
 ├── data/              # Optional static data (JSON, lookups, seeds)
@@ -65,16 +66,17 @@ App (PWA)**. Depending on which type of app you want to build, follow the instru
 If you're building a regular website, some features related to PWAs are unnecessary and can be
 removed or commented out:
 
-#### Required Changes:
+#### Required Changes for Standard Website
 
 - **Manifest file**: You can remove or ignore `manifest.json` as it's only needed for PWAs.
 
-- **Service Worker**: You don't need a service worker. In `app.js`, set `useServiceWorker` to
+- **Service Worker**: You don't need a service worker. In `js/app.js`, set `USE_SERVICE_WORKER` to
   `false` to ensure that no service worker is registered and that any previously registered service
-  worker is unregistered:
+  worker is unregistered. The registration and cleanup logic itself lives in
+  `js/service-worker-registration.js`:
 
   ```javascript
-  const useServiceWorker = false;
+  const USE_SERVICE_WORKER = false;
   ```
 
 - **Meta Tags**: You can remove or ignore the following meta tags in `index.html`:
@@ -97,9 +99,9 @@ removed or commented out:
 
   ```css
   body {
-  	user-select: none; /* Prevents text selection */
-  	-webkit-user-select: none; /* Prevents text selection on older WebKit-based browsers */
-  	-webkit-touch-callout: none; /* Disables the long-press menu on iOS */
+   user-select: none; /* Prevents text selection */
+   -webkit-user-select: none; /* Prevents text selection on older WebKit-based browsers */
+   -webkit-touch-callout: none; /* Disables the long-press menu on iOS */
   }
   ```
 
@@ -108,7 +110,7 @@ removed or commented out:
 If you want to take full advantage of PWA features, follow these steps to ensure everything is set
 up correctly:
 
-#### Required Changes:
+#### Required Changes for PWA
 
 - **Manifest File**: Make sure `manifest.json` is properly configured. Replace the placeholders
   (`--yourSiteName--`, `--your description--`) with the actual name, description, and icons of your
@@ -118,36 +120,37 @@ up correctly:
 
   ```json
   {
-  	"short_name": "MyApp",
-  	"name": "My Application",
-  	"description": "A brief description of My Application.",
-  	"icons": [
-  		{
-  			"src": "icons/favicon.svg",
-  			"type": "image/svg+xml",
-  			"sizes": "any"
-  		},
-  		{
-  			"src": "icons/180x180.png",
-  			"type": "image/png",
-  			"sizes": "180x180"
-  		}
-  	],
-  	"start_url": "/",
-  	"scope": "/",
-  	"background_color": "#eee",
-  	"display": "standalone",
-  	"theme_color": "#eee"
+   "short_name": "MyApp",
+   "name": "My Application",
+   "description": "A brief description of My Application.",
+   "icons": [
+    {
+     "src": "icons/favicon.svg",
+     "type": "image/svg+xml",
+     "sizes": "any"
+    },
+    {
+     "src": "icons/180x180.png",
+     "type": "image/png",
+     "sizes": "180x180"
+    }
+   ],
+   "start_url": "/",
+   "scope": "/",
+   "background_color": "#eee",
+   "display": "standalone",
+   "theme_color": "#eee"
   }
   ```
 
-- **Service Worker**: In `app.js`, set `useServiceWorker` to `true` and define a
-  `serviceWorkerVersion`. The Service Worker will be registered with a versioned URL like
-  `service-worker.js?v=...`, ensuring that updates are always detected by the browser:
+- **Service Worker**: In `js/app.js`, set `USE_SERVICE_WORKER` to `true` and define
+  `SERVICE_WORKER_VERSION`. The browser-side registration and cleanup logic lives in
+  `js/service-worker-registration.js`. The Service Worker will be registered with a versioned URL
+  like `service-worker.js?v=...`, ensuring that updates are always detected by the browser:
 
   ```javascript
-  const useServiceWorker = true;
-  const serviceWorkerVersion = "2025-07-06-v1";
+  const USE_SERVICE_WORKER = true;
+  const SERVICE_WORKER_VERSION = "2026-03-12-v1";
   ```
 
 - **Cache Naming**: The Service Worker extracts the `v` parameter from its registration URL and uses
@@ -189,15 +192,15 @@ both light and dark modes:
 
 ```css
 :root {
-	--bg-color: hsl(0, 0%, 95%);
-	--font-color: hsl(0, 0%, 20%);
+ --bg-color: hsl(0, 0%, 95%);
+ --font-color: hsl(0, 0%, 20%);
 }
 
 @media (prefers-color-scheme: dark) {
-	:root {
-		--bg-color: hsl(0, 0%, 20%);
-		--font-color: hsl(0, 0%, 90%);
-	}
+ :root {
+  --bg-color: hsl(0, 0%, 20%);
+  --font-color: hsl(0, 0%, 90%);
+ }
 }
 ```
 
@@ -238,16 +241,16 @@ A strict `.deno.json` keeps formatting and linting consistent across the codebas
 
 ```jsonc
 {
-	"fmt": {
-		"useTabs": true,
-		"indentWidth": 4,
-		"lineWidth": 100,
-		"singleQuote": false,
-		"semiColons": true
-	},
-	"lint": {
-		"rules": { "tags": ["recommended"] }
-	}
+ "fmt": {
+  "useTabs": true,
+  "indentWidth": 4,
+  "lineWidth": 100,
+  "singleQuote": false,
+  "semiColons": true
+ },
+ "lint": {
+  "rules": { "tags": ["recommended"] }
+ }
 }
 ```
 
