@@ -45,7 +45,7 @@ function textResponse(body, status, origin) {
 	});
 }
 
-function _emptyResponse(origin, status = 204) {
+function emptyResponse(origin, status = 204) {
 	return new Response(null, {
 		status,
 		headers: withCors(origin, {
@@ -68,13 +68,26 @@ async function readJson(request) {
 	}
 }
 
+function requestHasJsonContentType(request) {
+	const contentType = (request.headers.get("content-type") || "").toLowerCase();
+	return contentType.startsWith("application/json");
+}
+
 function isOriginAllowed(origin) {
-	return origin === null || ALLOWED_ORIGINS.has(origin);
+	return ALLOWED_ORIGINS.has(origin);
 }
 
 /* --------------------------------------------------------------------------------------------------
 route handlers
 ---------------------------------------------------------------------------------------------------*/
+function handleOptions(origin) {
+	return emptyResponse(origin);
+}
+
+function handleHealth(_request, origin) {
+	return jsonResponse({ ok: true }, origin);
+}
+
 // Temporary starter example.
 // Remove this block as soon as you add the first real project-specific endpoint.
 function handleExampleGet(request, origin) {
@@ -87,6 +100,9 @@ function handleExampleGet(request, origin) {
 }
 
 async function handleExamplePost(request, origin) {
+	if (!requestHasJsonContentType(request)) {
+		return textResponse("Content-Type must be application/json", 415, origin);
+	}
 	const body = await readJson(request);
 	if (!body) {
 		return textResponse("Invalid JSON", 400, origin);
