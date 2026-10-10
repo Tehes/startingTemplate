@@ -42,7 +42,7 @@ This template optionally supports server-side or edge endpoints using **Deno Dep
 ├── manifest.json      # PWA manifest (only for PWA usage)
 ├── service-worker.js  # Service worker (only for PWA usage)
 ├── deno.json          # Deno linting & formatting config
-├── agents.md          # AI / agent coding guidelines
+├── AGENTS.md          # AI / agent coding guidelines
 ├── .nojekyll          # Required for GitHub Pages
 ├── README.md
 └── LICENSE.txt

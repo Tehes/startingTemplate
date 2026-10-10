@@ -1,4 +1,4 @@
-# agents.md
+# AGENTS.md
 
 This file defines **how AI agents must work in this repository**.\
 It is binding. When in doubt, choose the most conservative option and change less, not more.
